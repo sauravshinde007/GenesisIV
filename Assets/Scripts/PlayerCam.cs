@@ -41,4 +41,24 @@ public class PlayerCam : MonoBehaviour
         player.Rotate(Vector3.up * inputX);
 
     }
+
+    public void DoFov(float endValue)
+    {
+        Camera cam = GetComponent<Camera>();
+
+        // Only tween if the FOV is different
+        if (Mathf.Approximately(cam.fieldOfView, endValue)) return;
+
+        cam.DOKill();  // Kill any ongoing FOV tween
+        cam.DOFieldOfView(endValue, 0.25f);
+    }
+
+    public void DoTilt(float zTilt)
+    {
+        // Only tween if the tilt is different
+        if (Mathf.Approximately(transform.localEulerAngles.z, zTilt)) return;
+
+        transform.DOKill();  // Kill any ongoing tilt tween
+        transform.DOLocalRotate(new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, zTilt), 0.25f);
+    }
 }

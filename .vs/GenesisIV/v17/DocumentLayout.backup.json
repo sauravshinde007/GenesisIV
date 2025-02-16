@@ -3,23 +3,19 @@
   "WorkspaceRootPath": "D:\\Unity Game Projects\\GenesisIV\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|d:\\unity game projects\\genesisiv\\assets\\scripts\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\WallRunning.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\wallrunning.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|d:\\unity game projects\\genesisiv\\assets\\scripts\\wallrunning.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\wallrunning.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\WallRunningAdvanced.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\MoveCamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\MoveCamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -29,17 +25,18 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "WallRunningAdvanced.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\WallRunningAdvanced.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\WallRunningAdvanced.cs",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAAAMAAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "WallRunning.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\WallRunning.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\WallRunning.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-15T06:00:24.834Z"
+              "WhenOpened": "2025-02-16T11:58:25.614Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -47,11 +44,12 @@
               "Title": "WallRunning.cs",
               "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\WallRunning.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\WallRunning.cs",
-              "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\WallRunning.cs",
-              "RelativeToolTip": "Assets\\Scripts\\WallRunning.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAmwE0AAAARAAAAAAAAAA==",
+              "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\WallRunning.cs*",
+              "RelativeToolTip": "Assets\\Scripts\\WallRunning.cs*",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAmwCEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T09:26:32.016Z"
+              "WhenOpened": "2025-02-14T09:26:32.016Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -67,28 +65,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MoveCamera.cs",
-              "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\MoveCamera.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\MoveCamera.cs",
-              "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\MoveCamera.cs",
-              "RelativeToolTip": "Assets\\Scripts\\MoveCamera.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-13T06:40:28.664Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PlayerCam.cs",
               "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\PlayerCam.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerCam.cs",
               "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\PlayerCam.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerCam.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-13T06:27:36.099Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-13T06:27:36.099Z"
             }
           ]
         }

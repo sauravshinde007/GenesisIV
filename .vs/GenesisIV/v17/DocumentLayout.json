@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\Unity Game Projects\\GenesisIV\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\wallrunning.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\wallrunning.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|d:\\unity game projects\\genesisiv\\assets\\scripts\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\wallrunning.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\wallrunning.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,42 +22,43 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "WallRunning.cs",
               "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\WallRunning.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\WallRunning.cs",
               "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\WallRunning.cs",
               "RelativeToolTip": "Assets\\Scripts\\WallRunning.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAAmwLMAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-14T09:26:32.016Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "PlayerMovement.cs",
               "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\PlayerMovement.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerMovement.cs",
               "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\PlayerMovement.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerMovement.cs",
-              "ViewState": "AgIAAHYAAAAAAAAAAAAawD0AAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAMsAAAAAAAAAAAAvwO4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-13T07:20:40.736Z"
+              "WhenOpened": "2025-02-13T07:20:40.736Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "PlayerCam.cs",
               "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\PlayerCam.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerCam.cs",
               "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\PlayerCam.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerCam.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAACgAAAAAAAAAAAAiwDgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-13T06:27:36.099Z",
               "EditorCaption": ""
