@@ -73,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
     public bool activeGrapple;
     public bool swinging;
     public bool freeze;
+    public bool walking;
+    public bool isWalking;
 
     private void Start()
     {
@@ -141,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
     private void StateHandler()
     {
         //Mode- Wall Running
+        isWalking = false;
         if (wallrunning)
         {
             state = MovementState.WallRunning;
@@ -175,12 +178,15 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.Sprinting;
             moveSpeed = sprintSpeed;
+            isWalking = true;
+            
         }
         //Mode - Walking
-        else if (grounded)
+        else if (grounded &&(horizontalInput != 0 || verticalInput != 0))
         {
             state = MovementState.Walking;
             moveSpeed = walkSpeed;
+            isWalking = true;
         }
         //Mode - Air
         else
@@ -325,18 +331,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else // Grappling downward
         {
-            
-            
-            
             velocityY = Mathf.Sqrt(2*gravity * (trajectoryHeight - transform.position.y));
             Debug.Log("h:"+transform.position.y);
             Debug.Log("TrajectoryHeight:" + trajectoryHeight);
             Debug.Log("Hmax:"+(trajectoryHeight-transform.position.y));
             timeToReach = (velocityY +Mathf.Sqrt(2*trajectoryHeight*gravity))/gravity; // Free-fall time
-            
 
-            
-            
         }
 
         velocityXZ = displacementXZ / timeToReach; // Compute horizontal velocity
