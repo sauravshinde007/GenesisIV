@@ -10,7 +10,7 @@ public class PlayerCam : MonoBehaviour
     public float mouseSensitivity = 2f;
     float cameraVerticalRotation = 0f;
 
-    bool lockedCursor = true;
+    //bool lockedCursor = true;
 
 
     void Start()
@@ -18,7 +18,6 @@ public class PlayerCam : MonoBehaviour
         // Lock and Hide the Cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
     }
 
 

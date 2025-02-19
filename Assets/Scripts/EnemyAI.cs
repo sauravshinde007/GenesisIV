@@ -11,7 +11,10 @@ public class EnemyAI : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    public float health;
+    [Header("Status")]
+    private int currenthealth;
+    public int maxHealth = 10;
+    public HealthBar healthBar;
 
     //Patroling
     public Vector3 walkPoint;
@@ -26,6 +29,12 @@ public class EnemyAI : MonoBehaviour
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+
+    private void Start()
+    {
+        currenthealth = maxHealth;
+        healthBar.SetMaxHealth(currenthealth);
+    }
 
     private void Awake()
     {
@@ -42,6 +51,8 @@ public class EnemyAI : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
+
+        if (currenthealth <= 0) DestroyEnemy();
     }
 
     private void Patroling()
@@ -101,17 +112,18 @@ public class EnemyAI : MonoBehaviour
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
+
+    public void TakeDamage(int damage)
+    {
+        currenthealth -= damage;
+        healthBar.SetHealth(currenthealth);
+    }
+
     private void ResetAttack()
     {
         alreadyAttacked = false;
     }
 
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
-    }
     private void DestroyEnemy()
     {
         Destroy(gameObject);

@@ -24,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
     public float crouchYScale;
     private float startYScale;
 
+    [Header("Health")]
+    public int maxHealth = 50;
+    public int currentHealth;
+    public HealthBar healthBar;
+
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
@@ -84,6 +89,10 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         startYScale = transform.localScale.y;
+
+        //Health settings
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     private void Update()
@@ -304,6 +313,22 @@ public class PlayerMovement : MonoBehaviour
         cam.DoFov(85f);
     }
 
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player Died!");
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (enableMovementOnNextTouch)
@@ -312,6 +337,14 @@ public class PlayerMovement : MonoBehaviour
             ResetRestrictions();
 
             gun.StopGrapple();
+        }
+
+        // Check if the player is hit by a bullet
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+
+            TakeDamage(10);
+            Destroy(collision.gameObject); // Destroy bullet on impact
         }
     }
     public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
