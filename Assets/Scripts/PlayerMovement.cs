@@ -9,7 +9,9 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed;
     public float sprintSpeed;
     public float wallrunSpeed;
+    public float swingSpeed;
 
+   
     public float groundDrag;
 
     public float jumpForce;
@@ -42,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
     public float lowJumpMultiplier = 2f;
 
     public Transform orientation;
+    public PlayerCam cam;
+    public float grappleFov = 95f;
+    public Gun gun;
 
     float horizontalInput;
     float verticalInput;
@@ -49,17 +54,25 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+    private Vector3 gravity = Physics.gravity;
 
     public enum MovementState
     {
+        freeze,
         Walking,
+        grappling,
+        swinging,
         Sprinting,
         Crouching,
         WallRunning,
         Air,
     }
     public MovementState state;
+    [HideInInspector]
     public bool wallrunning;
+    public bool activeGrapple;
+    public bool swinging;
+    public bool freeze;
 
     private void Start()
     {
@@ -80,21 +93,21 @@ public class PlayerMovement : MonoBehaviour
         SpeedControl();
         StateHandler();
 
-        // handle drag
-        if (grounded)
+        if (grounded && !activeGrapple)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
 
-        if (!grounded) // Apply extra gravity when not grounded
-        {
-            rb.AddForce(Vector3.down * (fallMultiplier * 10f), ForceMode.Acceleration);
-        }
+        // if (!grounded) // Apply extra gravity when not grounded
+        // {
+        //     rb.AddForce(Vector3.down * (fallMultiplier * 10f), ForceMode.Acceleration);
+        // }
     }
 
     private void MyInput()
@@ -133,6 +146,24 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.WallRunning;
             moveSpeed = wallrunSpeed;
         }
+        if (freeze)
+        {
+            state = MovementState.freeze;
+            moveSpeed = 0;
+            rb.velocity = Vector3.zero;
+        }
+        else if (activeGrapple)
+        {
+            state = MovementState.grappling;
+            moveSpeed = sprintSpeed;
+        }
+
+        // Mode - Swinging
+        else if (swinging)
+        {
+            state = MovementState.swinging;
+            moveSpeed = swingSpeed;
+        }
         //Mode - Crouching
         if (Input.GetKey(crouchKey))
         {
@@ -160,6 +191,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        if (activeGrapple) return;
+        if (swinging) return;
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
@@ -182,11 +215,13 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(moveDirection.normalized * moveSpeed * 5f * airMultiplier, ForceMode.Force);
 
         //turn of gravity on slope
+        rb.useGravity = !OnSlope();
         if (!wallrunning) rb.useGravity = !OnSlope();
     }
 
     private void SpeedControl()
     {
+        if (activeGrapple) return;
         //limiting speed on slope
         if (OnSlope() && !exitingSlope)
         {
@@ -237,4 +272,79 @@ public class PlayerMovement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
+    private bool enableMovementOnNextTouch;
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+    {
+        activeGrapple = true;
+
+        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
+        Invoke(nameof(SetVelocity), 0.1f);
+
+        Invoke(nameof(ResetRestrictions), 3f);
+    }
+    private Vector3 velocityToSet;
+    private void SetVelocity()
+    {
+        enableMovementOnNextTouch = true;
+        rb.velocity = velocityToSet;
+        cam.DoFov(grappleFov);
+    }
+    public void ResetRestrictions()
+    {
+        activeGrapple = false;
+        swinging = false;
+        Physics.gravity = gravity;
+    
+        cam.DoFov(85f);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (enableMovementOnNextTouch)
+        {
+            enableMovementOnNextTouch = false;
+            ResetRestrictions();
+
+            gun.StopGrapple();
+        }
+    }
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Mathf.Abs(Physics.gravity.y); // Ensure positive gravity
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        float timeToReach;
+        float velocityY;
+        Vector3 velocityXZ;
+
+        if (displacementY > 0) // Grappling upwards
+        {
+            velocityY = Mathf.Sqrt(2 * gravity * trajectoryHeight); // Needed to reach peak height
+            timeToReach = (velocityY + Mathf.Sqrt(velocityY * velocityY + 2 * gravity * displacementY)) / gravity;
+        }
+        else // Grappling downward
+        {
+            
+            
+            
+            velocityY = Mathf.Sqrt(2*gravity * (trajectoryHeight - transform.position.y));
+            Debug.Log("h:"+transform.position.y);
+            Debug.Log("TrajectoryHeight:" + trajectoryHeight);
+            Debug.Log("Hmax:"+(trajectoryHeight-transform.position.y));
+            timeToReach = (velocityY +Mathf.Sqrt(2*trajectoryHeight*gravity))/gravity; // Free-fall time
+            
+
+            
+            
+        }
+
+        velocityXZ = displacementXZ / timeToReach; // Compute horizontal velocity
+
+        Debug.Log("Gravity: " + gravity);
+        Debug.Log("Velocity XZ: " + velocityXZ + " Velocity Y: " + velocityY);
+
+        return new Vector3(velocityXZ.x, velocityY, velocityXZ.z);
+    }
+
 }
