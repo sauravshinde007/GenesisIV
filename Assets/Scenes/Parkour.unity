@@ -6174,7 +6174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4631474188692212794, guid: 25a538ce96fbc7c4aa3e877dc8e72fe9, type: 3}
       propertyPath: jumpForce
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4631474188692212794, guid: 25a538ce96fbc7c4aa3e877dc8e72fe9, type: 3}
       propertyPath: whatIsGround.m_Bits
