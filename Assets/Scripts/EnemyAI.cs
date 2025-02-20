@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IDamageable
 {
     public NavMeshAgent agent;
 
@@ -51,8 +51,6 @@ public class EnemyAI : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
-
-        if (currenthealth <= 0) DestroyEnemy();
     }
 
     private void Patroling()
@@ -117,6 +115,11 @@ public class EnemyAI : MonoBehaviour
     {
         currenthealth -= damage;
         healthBar.SetHealth(currenthealth);
+
+        if (currenthealth <= 0)
+        {
+            DestroyEnemy();
+        }
     }
 
     private void ResetAttack()

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Gun.cs" />
+    <Compile Include="Assets\Scripts\IDamageable.cs" />
     <Compile Include="Assets\Scripts\PlayerCam.cs" />
     <Compile Include="Assets\Scripts\WallRunning.cs" />
     <Compile Include="Assets\Scripts\GunShoot.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Assets\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Rope.cs" />
+    <Compile Include="Assets\Scripts\BossAI.cs" />
     <Compile Include="Assets\Scripts\Billboard.cs" />
     <Compile Include="Assets\Scripts\GrappleRotate.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />

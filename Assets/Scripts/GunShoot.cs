@@ -102,11 +102,12 @@ public class GunShoot : MonoBehaviour
             
             if (Physics.Raycast(gunTip.position, direction, out hit, float.MaxValue, Mask))
             {
-                Debug.Log(hit.collider);
-
                 //Check if we hit an enemy
-                EnemyAI enemy = hit.collider.GetComponent<EnemyAI>();
-                enemy.TakeDamage(3);
+                IDamageable damagable = hit.collider.GetComponent<IDamageable>();
+                if(damagable != null)
+                {
+                    damagable.TakeDamage(3);
+                }
 
                 StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
             }

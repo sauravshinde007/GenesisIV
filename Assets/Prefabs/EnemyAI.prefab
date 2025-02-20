@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6755498458567777213}
   - component: {fileID: 7504786369718712493}
   - component: {fileID: 3281396526860392126}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 8026253848017285269}
   - component: {fileID: 226284192060781632}
   - component: {fileID: 1276086946615002884}
+  - component: {fileID: 5054433710091173889}
   m_Layer: 10
   m_Name: EnemyAI
   m_TagString: Untagged
@@ -172,6 +173,7 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  currenthealth: 0
   maxHealth: 10
   healthBar: {fileID: 1951879860469328257}
   walkPoint: {x: 0, y: 0, z: 0}
@@ -227,6 +229,29 @@ CapsuleCollider:
   m_Height: 2.000206
   m_Direction: 1
   m_Center: {x: 0, y: 0.00459671, z: 0}
+--- !u!136 &5054433710091173889
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7802841280674352453}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.9265485
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.00874114, z: 0}
 --- !u!1 &7949202884113896111
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5141951803863285270, guid: 18ce83d0778dda348ace5cd9af00f8ab, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7309247856739234616, guid: 18ce83d0778dda348ace5cd9af00f8ab, type: 3}
       propertyPath: m_Name
@@ -420,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7309247856739234616, guid: 18ce83d0778dda348ace5cd9af00f8ab, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7440531601013468087, guid: 18ce83d0778dda348ace5cd9af00f8ab, type: 3}
       propertyPath: m_AnchorMax.x
@@ -432,7 +457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7749649423203508039, guid: 18ce83d0778dda348ace5cd9af00f8ab, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
