@@ -735,7 +735,6 @@ GameObject:
   - component: {fileID: 7383694824407393221}
   - component: {fileID: 4570070804486119620}
   - component: {fileID: 6098590063489480003}
-  - component: {fileID: 256543115878788463}
   m_Layer: 6
   m_Name: GFX
   m_TagString: Untagged
@@ -808,29 +807,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &256543115878788463
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4179617572424660912}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5698044251307400792
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,9 +819,10 @@ GameObject:
   - component: {fileID: 5664985500067677529}
   - component: {fileID: 4631474188692212794}
   - component: {fileID: 2761104931200960435}
+  - component: {fileID: 7665581224798152477}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -955,13 +932,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsWall:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 2048
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
   wallRunForce: 200
-  wallJumpUpForce: 10
-  wallJumpSideForce: 15
+  wallJumpUpForce: 7
+  wallJumpSideForce: 10
   wallClimbSpeed: 3
   maxWallRunTime: 0.7
   jumpKey: 32
@@ -974,6 +951,29 @@ MonoBehaviour:
   gravityCounterForce: 20
   orientation: {fileID: 972149455462378898}
   cam: {fileID: 6471144197089613293}
+--- !u!136 &7665581224798152477
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5698044251307400792}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.0956297
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.029626608, z: 0}
 --- !u!1 &6147905420780754838
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,14 +1254,14 @@ MonoBehaviour:
   grapplingCd: 0.5
   swingable:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 256
   maxSwingDistance: 30
   horizontalThrustForce: 2000
-  forwardThrustForce: 3000
+  forwardThrustForce: 2000
   extendCableSpeed: 20
   trampoline:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 512
   maxCheckDistance: 10
   trampolineForce: 15
 --- !u!114 &2122436636026576597
@@ -1443,7 +1443,7 @@ MonoBehaviour:
   ImpactParticleSystem: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
   Mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   gunAnimator: {fileID: 8444818242560211393}
   ammunitionDisplay: {fileID: 6481272973093768068}
   playerMovement: {fileID: 4631474188692212794}

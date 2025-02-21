@@ -146,7 +146,7 @@ public class GunShoot : MonoBehaviour
 
         if (MadeImpact)
         {
-            Instantiate(ImpactParticleSystem, HitPoint, Quaternion.LookRotation(HitNormal));
+            //Instantiate(ImpactParticleSystem, HitPoint, Quaternion.LookRotation(HitNormal));
         }
         
         ReturnTrail(Trail);

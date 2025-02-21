@@ -11,20 +11,20 @@
       "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gunshoot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|d:\\unity game projects\\genesisiv\\assets\\scripts\\idamageable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\idamageable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\idamageable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D9B09C98-8051-EAFA-E578-307201054D0E}|Assembly-CSharp.csproj|D:\\Unity Game Projects\\GenesisIV\\assets\\scripts\\billboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +50,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "IDamageable.cs",
               "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\IDamageable.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\IDamageable.cs",
@@ -58,8 +58,7 @@
               "RelativeToolTip": "Assets\\Scripts\\IDamageable.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T05:44:39.957Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T05:44:39.957Z"
             },
             {
               "$type": "Document",
@@ -69,23 +68,35 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\BossAI.cs",
               "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\BossAI.cs",
               "RelativeToolTip": "Assets\\Scripts\\BossAI.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAvwF8AAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAwwIYAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-19T19:55:29.53Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "GunShoot.cs",
+              "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\GunShoot.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GunShoot.cs",
+              "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\GunShoot.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GunShoot.cs",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAvwJQAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T11:10:50.386Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "EnemyAI.cs",
               "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\EnemyAI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyAI.cs",
               "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\EnemyAI.cs",
               "RelativeToolTip": "Assets\\Scripts\\EnemyAI.cs",
-              "ViewState": "AgIAAGQAAAAAAAAAAAAEwHQAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T03:54:23.756Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-18T03:54:23.756Z"
             },
             {
               "$type": "Document",
@@ -98,19 +109,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-19T12:47:57.328Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "GunShoot.cs",
-              "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\GunShoot.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\GunShoot.cs",
-              "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\GunShoot.cs",
-              "RelativeToolTip": "Assets\\Scripts\\GunShoot.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAcwG4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T11:10:50.386Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -138,19 +136,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "PlayerMovement.cs",
               "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\PlayerMovement.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerMovement.cs",
               "ToolTip": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\PlayerMovement.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerMovement.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAAA5wEgBAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAD4BAAAAAAAAAAAywHYBAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-13T07:20:40.736Z"
+              "WhenOpened": "2025-02-13T07:20:40.736Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "PlayerCam.cs",
               "DocumentMoniker": "D:\\Unity Game Projects\\GenesisIV\\Assets\\Scripts\\PlayerCam.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerCam.cs",

@@ -20,12 +20,17 @@ public class BossAI : MonoBehaviour, IDamageable
     private float rotationSpeed = 5f;
 
     [Header("Machine Gun")]
-    public GameObject bulletPrefab;
     public Transform firePoint;
-    public float bulletSpeed = 20f;
-    public float bulletFireRate = 0.1f; // Time between shots
+    public float bulletFireRate = 0.1f; // Time between each bullet
+    public int bulletsPerBurst = 10; // Number of bullets per attack
+    public float bulletSpread = 2f; // Spread factor
+    public float bulletRange = 50f; // Maximum bullet range
+    public int bulletDamage = 10; // Damage per bullet
+    public LayerMask hitMask;
+
+    public ParticleSystem muzzleFlash;
+    public TrailRenderer BulletTrail;
     private bool isFiring = false;
-    private float playerSpeedThreshold = 5f;
 
     private void Start()
     {
@@ -111,16 +116,10 @@ public class BossAI : MonoBehaviour, IDamageable
         isFiring = true;
         animator.SetTrigger("BulletFire");
 
-        float fireRate = bulletFireRate;
-        if (player.GetComponent<Rigidbody>().velocity.magnitude > playerSpeedThreshold)
-        {
-            fireRate *= 1.5f; // Add delay if player is moving fast
-        }
-
-        for (int i = 0; i < 10; i++) // Fire 10 bullets
+        for (int i = 0; i < bulletsPerBurst; i++)
         {
             ShootBullet();
-            yield return new WaitForSeconds(fireRate);
+            yield return new WaitForSeconds(bulletFireRate); // Machine gun firing delay
         }
 
         isFiring = false;
@@ -128,12 +127,55 @@ public class BossAI : MonoBehaviour, IDamageable
 
     void ShootBullet()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.velocity = firePoint.forward * bulletSpeed;
+        if (player == null) return;
+
+        if (muzzleFlash != null)
+        {
+            muzzleFlash.Stop(); // Stop any existing particles
+            muzzleFlash.Play(); // Play muzzle flash effect
+        }
+
+        // Add slight spread to machine gun fire
+        Vector3 fireDirection = (player.position - firePoint.position).normalized;
+
+        fireDirection += new Vector3(
+            Random.Range(-bulletSpread, bulletSpread) * 0.01f,
+            Random.Range(-bulletSpread, bulletSpread) * 0.01f,
+            Random.Range(-bulletSpread, bulletSpread) * 0.01f
+        );
+
+        RaycastHit hit;
+    
+        if (Physics.Raycast(firePoint.position, fireDirection, out hit, bulletRange, hitMask))
+        {
+            // Apply damage if it hits the player
+            if (hit.collider.CompareTag("Player"))
+            {
+                hit.collider.GetComponent<PlayerMovement>().TakeDamage(bulletDamage);
+            }
+        }
+        StartCoroutine(SpawnBulletTrail(hit.point));
     }
 
-    void LaserFire()
+    IEnumerator SpawnBulletTrail(Vector3 hitPoint)
+    {
+        TrailRenderer bulletTrail = Instantiate(BulletTrail, firePoint.position, Quaternion.identity);
+        float elapsedTime = 0f;
+        float bulletSpeed = 100f;
+        Vector3 startPosition = firePoint.position;
+
+        while (elapsedTime < 1f) // Make trail move smoothly
+        {
+            bulletTrail.transform.position = Vector3.Lerp(startPosition, hitPoint, elapsedTime * bulletSpeed / bulletRange);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        bulletTrail.transform.position = hitPoint; // Ensure it reaches final position
+        Destroy(bulletTrail.gameObject, bulletTrail.time); // Destroy after trail effect ends
+    }
+
+    void LaserFire()    
     {
         Debug.Log("Boss Firing Laser!");
         animator.SetTrigger("LaserFire");
