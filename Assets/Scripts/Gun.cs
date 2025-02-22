@@ -77,7 +77,6 @@ public class Gun : MonoBehaviour
             Vector3 direction = trampolinePosition - fpsCamera.transform.position;
             // Vector3 direction = hit.normal;
             playerRb.velocity = Vector3.zero;
-            Debug.Log("Direction" + direction.normalized);
             playerRb.AddForce(-direction.normalized * trampolineForce, ForceMode.VelocityChange);
             return true;
         }

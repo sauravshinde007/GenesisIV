@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -346,6 +347,12 @@ public class PlayerMovement : MonoBehaviour
             TakeDamage(10);
             Destroy(collision.gameObject); // Destroy bullet on impact
         }
+
+        // Check if the player collides with a death object
+        if (collision.gameObject.CompareTag("Death"))
+        {
+            RestartScene();
+        }
     }
     public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
     {
@@ -378,6 +385,11 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Velocity XZ: " + velocityXZ + " Velocity Y: " + velocityY);
 
         return new Vector3(velocityXZ.x, velocityY, velocityXZ.z);
+    }
+
+    private void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 }
