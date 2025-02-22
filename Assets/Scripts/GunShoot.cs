@@ -25,9 +25,12 @@ public class GunShoot : MonoBehaviour
     private bool reloading;
     private bool readyToShoot = true;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         bulletsLeft = magazineSize;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         InitializeTrailPool();
     }
 
@@ -89,8 +92,11 @@ public class GunShoot : MonoBehaviour
 
     public void Shoot()
     {
+
         if (LastShootTime + timeBetweenShooting < Time.time)
         {
+            audioManager.PlaySFX(audioManager.gunShot);
+
             gunAnimator.ResetTrigger("isShooting");
             gunAnimator.SetTrigger("isShooting");
             ShootingSystem.Play();
@@ -163,6 +169,7 @@ public class GunShoot : MonoBehaviour
         if (gunAnimator != null)
         {
             gunAnimator.SetBool("isReloading",true);
+            audioManager.PlaySFX(audioManager.reload);
         }
 
         Invoke("ReloadFinished", reloadTime);

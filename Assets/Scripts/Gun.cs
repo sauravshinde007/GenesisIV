@@ -36,7 +36,14 @@ public class Gun : MonoBehaviour
     public float maxCheckDistance;
     public float trampolineForce;
     private Vector3 trampolinePosition;
-    
+
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     void Update()
     {
         HandleInput();
@@ -104,6 +111,8 @@ public class Gun : MonoBehaviour
         
         playerMovement.swinging = true;
         grapplePoint = hit.point;
+
+        audioManager.PlaySFX(audioManager.grapple);
 
         if (joint == null)
         {
