@@ -10,9 +10,6 @@ public class PlayerCam : MonoBehaviour
     public float mouseSensitivity = 2f;
     float cameraVerticalRotation = 0f;
 
-    //bool lockedCursor = true;
-
-
     void Start()
     {
         // Lock and Hide the Cursor
@@ -21,12 +18,12 @@ public class PlayerCam : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         // Collect Mouse Input
 
-        float inputX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float inputY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        float inputX = Input.GetAxisRaw("Mouse X") * mouseSensitivity;
+        float inputY = Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
 
         // Rotate the Camera around its local X axis
 
