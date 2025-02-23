@@ -128,18 +128,22 @@ public class WallRunning : MonoBehaviour
 
     private void StartWallRun()
     {
-        if (pm.wallrunning) return; // Prevent re-entering if already wallrunning
+        if (pm.wallrunning) return;
 
         pm.wallrunning = true;
         wallRunTimer = maxWallRunTime;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        // Apply camera effects once
         cam.DoFov(90f);
-        if (wallLeft) cam.DoTilt(-5f);
-        if (wallRight) cam.DoTilt(5f);
+        float tiltAngle = wallLeft ? -5f : 5f;
+        cam.DoTilt(tiltAngle);
+
+        // Apply an instant force to stick to the wall
+        Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
+        rb.AddForce(-wallNormal * 300f, ForceMode.Impulse); // Increased initial sticking force
     }
+
 
     private void WallRunningMovement()
     {

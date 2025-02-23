@@ -17,26 +17,42 @@ public class BossAI : MonoBehaviour, IDamageable
     [Header("Attack Settings")]
     public float attackCooldown = 3f; // Time between attacks
     private bool isAttacking = false;
-    private float rotationSpeed = 5f;
+    private float rotationSpeed = 3f;
 
     [Header("Machine Gun")]
     public Transform firePoint;
     public float bulletFireRate = 0.1f; // Time between each bullet
     public int bulletsPerBurst = 10; // Number of bullets per attack
-    public float bulletSpread = 2f; // Spread factor
+    public float bulletSpread = 200f; // Spread factor
     public float bulletRange = 50f; // Maximum bullet range
     public int bulletDamage = 10; // Damage per bullet
     public LayerMask hitMask;
 
     public ParticleSystem muzzleFlash;
     public TrailRenderer BulletTrail;
-    private bool isFiring = false;
+    [Header("Missile Attack")]
+    public GameObject missilePrefab;
+    public Transform missileLaunchPoint;
+    public GameObject target;
 
+    public float delay = 0.5f;
+
+    [Header("Laser Attack")]
+    public LineRenderer laserLine;
+    public Transform laserFirePoint;
+    public float laserDuration = 1f;
+    public int laserDamage = 20;
+    public float laserRange = 50f;
+    public LayerMask playerLayer;
+
+
+    public float laserRotationSpeed = 2f;
     private void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(currentHealth);
         agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
     }
 
     private void Update()
@@ -102,18 +118,32 @@ public class BossAI : MonoBehaviour, IDamageable
             else
                 LaserFire();
         }
+        
+
     }
 
     void MissileLaunch()
     {
-        Debug.Log("Boss Launching Missile!");
-        animator.SetTrigger("MissileLaunch");
-        // Implement missile attack logic here
-    }
 
+        animator.SetTrigger("MissileLaunch");
+        Invoke("LaunchMissle", delay);
+
+    }
+    void LaunchMissle()
+    {
+        if (missilePrefab != null && missileLaunchPoint != null)
+        {
+            GameObject missileInstance = Instantiate(missilePrefab, missileLaunchPoint.position, missileLaunchPoint.rotation);
+            Missile missileScript = missileInstance.GetComponent<Missile>();
+            if (missileScript != null)
+            {
+                missileScript.SetTarget(target);
+            }
+        }
+
+    }
     IEnumerator BulletFireRoutine()
     {
-        isFiring = true;
         animator.SetTrigger("BulletFire");
 
         for (int i = 0; i < bulletsPerBurst; i++)
@@ -121,8 +151,6 @@ public class BossAI : MonoBehaviour, IDamageable
             ShootBullet();
             yield return new WaitForSeconds(bulletFireRate); // Machine gun firing delay
         }
-
-        isFiring = false;
     }
 
     void ShootBullet()
@@ -131,30 +159,36 @@ public class BossAI : MonoBehaviour, IDamageable
 
         if (muzzleFlash != null)
         {
-            muzzleFlash.Stop(); // Stop any existing particles
-            muzzleFlash.Play(); // Play muzzle flash effect
+            muzzleFlash.Stop();
+            muzzleFlash.Play();
         }
 
-        // Add slight spread to machine gun fire
+        // Compute the fire direction
         Vector3 fireDirection = (player.position - firePoint.position).normalized;
 
+        // Apply slight spread
         fireDirection += new Vector3(
             Random.Range(-bulletSpread, bulletSpread) * 0.01f,
             Random.Range(-bulletSpread, bulletSpread) * 0.01f,
             Random.Range(-bulletSpread, bulletSpread) * 0.01f
         );
 
+        fireDirection.Normalize(); // Ensure the direction is properly normalized
+
         RaycastHit hit;
-    
+        Vector3 targetPoint = firePoint.position + fireDirection * bulletRange; // Default target if nothing is hit
+
         if (Physics.Raycast(firePoint.position, fireDirection, out hit, bulletRange, hitMask))
         {
-            // Apply damage if it hits the player
+            targetPoint = hit.point; // Update target point if a hit occurs
+
             if (hit.collider.CompareTag("Player"))
             {
                 hit.collider.GetComponent<PlayerMovement>().TakeDamage(bulletDamage);
             }
         }
-        StartCoroutine(SpawnBulletTrail(hit.point));
+
+        StartCoroutine(SpawnBulletTrail(targetPoint));
     }
 
     IEnumerator SpawnBulletTrail(Vector3 hitPoint)
@@ -164,23 +198,108 @@ public class BossAI : MonoBehaviour, IDamageable
         float bulletSpeed = 100f;
         Vector3 startPosition = firePoint.position;
 
-        while (elapsedTime < 1f) // Make trail move smoothly
+        while (elapsedTime < 1f) // Smooth movement
         {
             bulletTrail.transform.position = Vector3.Lerp(startPosition, hitPoint, elapsedTime * bulletSpeed / bulletRange);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        bulletTrail.transform.position = hitPoint; // Ensure it reaches final position
-        Destroy(bulletTrail.gameObject, bulletTrail.time); // Destroy after trail effect ends
+        bulletTrail.transform.position = hitPoint;
+        Destroy(bulletTrail.gameObject, bulletTrail.time);
     }
 
-    void LaserFire()    
+
+
+
+    void LaserFire()
     {
         Debug.Log("Boss Firing Laser!");
         animator.SetTrigger("LaserFire");
-        // Implement laser attack logic here
+        Invoke("StartLaser", 0.5f);
+
     }
+    void StartLaser()
+    {
+        StartCoroutine(FireLaser());
+    }
+    float GetRandomSweepAngle()
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            return Random.Range(-30f, -10f);
+        }
+        else
+        {
+            return Random.Range(10f, 30f);
+        }
+    }
+    IEnumerator FireLaser()
+    {
+        laserLine.enabled = true;
+
+        Vector3 directionToTarget = (player.position - laserFirePoint.position).normalized;
+        Quaternion initialRotation = Quaternion.LookRotation(directionToTarget);
+
+        float laserSweepAngle = GetRandomSweepAngle();
+
+        float elapsedTime = 0f;
+
+
+
+       
+        Quaternion startRotation = Quaternion.Euler(initialRotation.eulerAngles.x, initialRotation.eulerAngles.y + laserSweepAngle, initialRotation.eulerAngles.z);
+
+
+        laserFirePoint.rotation = startRotation; 
+
+        Vector3 fixedHitPoint = Vector3.zero; 
+        bool hitDetected = false; 
+
+        while (elapsedTime < laserDuration)
+        {
+            laserLine.SetPosition(0, laserFirePoint.position);
+            float yAngle = initialRotation.eulerAngles.y + 60 * (elapsedTime / laserDuration);
+            Quaternion targetRotation = Quaternion.Euler(initialRotation.eulerAngles.x, yAngle, initialRotation.eulerAngles.z);
+
+            
+            laserFirePoint.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / laserDuration);
+
+            Vector3 laserDirection = laserFirePoint.forward;
+
+            RaycastHit hit;
+            if (Physics.Raycast(laserFirePoint.position, laserDirection, out hit, laserRange, playerLayer))
+            {
+                if (!hitDetected) 
+                {
+                    fixedHitPoint = hit.point;
+                    hitDetected = true;
+                }
+
+                
+                Vector3 adjustedHitPoint = new Vector3(hit.point.x, fixedHitPoint.y, hit.point.z);
+                laserLine.SetPosition(1, adjustedHitPoint);
+
+                if (hit.collider.CompareTag("Player"))
+                {
+                    hit.collider.GetComponent<PlayerMovement>().TakeDamage(laserDamage);
+                }
+            }
+            else
+            {
+                
+                Vector3 sweepEndPoint = laserFirePoint.position + laserDirection * laserRange;
+                laserLine.SetPosition(1, sweepEndPoint);
+            }
+
+            elapsedTime += Time.deltaTime;
+            yield return null; 
+        }
+
+        laserLine.enabled = false;
+    }
+
+
 
     public void TakeDamage(int damage)
     {

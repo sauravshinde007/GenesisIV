@@ -32,7 +32,7 @@ public class GrapplingRope : MonoBehaviour
     void DrawRope()
     {
         //If not grappling, don't draw rope
-        if (!gun.isSwinging() && !gun.IsGrappling())
+        if (!gun.isSwinging() )
         {
             currentGrapplePosition = gun.gunTip.position;
             spring.Reset();

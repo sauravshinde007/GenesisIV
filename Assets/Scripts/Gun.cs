@@ -84,6 +84,7 @@ public class Gun : MonoBehaviour
             Vector3 direction = trampolinePosition - fpsCamera.transform.position;
             // Vector3 direction = hit.normal;
             playerRb.velocity = Vector3.zero;
+            Debug.Log("Direction" + direction.normalized);
             playerRb.AddForce(-direction.normalized * trampolineForce, ForceMode.VelocityChange);
             return true;
         }
@@ -100,7 +101,7 @@ public class Gun : MonoBehaviour
         }
         else
         {
-            StartGrapple();
+           // StartGrapple();
 
         }
     }
@@ -108,11 +109,11 @@ public class Gun : MonoBehaviour
     // Swinging SYSTEM
     void StartSwing(RaycastHit hit)
     {
-        
-        playerMovement.swinging = true;
-        grapplePoint = hit.point;
 
         audioManager.PlaySFX(audioManager.grapple);
+
+        playerMovement.swinging = true;
+        grapplePoint = hit.point;
 
         if (joint == null)
         {
@@ -186,69 +187,69 @@ public class Gun : MonoBehaviour
         return grapplePoint;
     }
 
-    // Grapple SYSTEM
-    private void StartGrapple()
-    {
-        if (grapplingCdTimer > 0) return;
+    // // Grapple SYSTEM
+    // private void StartGrapple()
+    // {
+    //     if (grapplingCdTimer > 0) return;
 
-        grappling = true;
-        playerMovement.freeze = true;
-        RaycastHit hit;
-        if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, maxGrappleDistance, whatIsGrappleable))
-        {
-            grapplePoint = hit.point;
+    //     grappling = true;
+    //     playerMovement.freeze = true;
+    //     RaycastHit hit;
+    //     if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, maxGrappleDistance, whatIsGrappleable))
+    //     {
+    //         grapplePoint = hit.point;
             
-            Invoke(nameof(ExecuteGrapple), grappleDelayTime);
-        }
-        else
-        {
-            grapplePoint = fpsCamera.transform.position + fpsCamera.transform.forward * maxGrappleDistance;
+    //         Invoke(nameof(ExecuteGrapple), grappleDelayTime);
+    //     }
+    //     else
+    //     {
+    //         grapplePoint = fpsCamera.transform.position + fpsCamera.transform.forward * maxGrappleDistance;
 
-            Invoke(nameof(StopGrapple), grappleDelayTime);
-        }
+    //         Invoke(nameof(StopGrapple), grappleDelayTime);
+    //     }
 
 
-    }
-    private void ExecuteGrapple()
-    {
-        playerMovement.freeze = false;
+    // }
+    // private void ExecuteGrapple()
+    // {
+    //     playerMovement.freeze = false;
 
-        Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
-        float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y;
-        float highestPointOnArc;
+    //     Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+    //     float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y;
+    //     float highestPointOnArc;
 
-        if (grapplePoint.y >= transform.position.y)
-        {
-            // Normal arc when grappling upwards
-            highestPointOnArc = grapplePoint.y + overshootYAxis;
-        }
-        else if(!isLookingDown())
-        {
+    //     if (grapplePoint.y >= transform.position.y)
+    //     {
+    //         // Normal arc when grappling upwards
+    //         highestPointOnArc = grapplePoint.y + overshootYAxis;
+    //     }
+    //     else if(!isLookingDown())
+    //     {
             
-            highestPointOnArc = transform.position.y+overshootYAxis;
-        }else{
-            StopGrapple();
-            return;
-        }
+    //         highestPointOnArc = transform.position.y+overshootYAxis;
+    //     }else{
+    //         StopGrapple();
+    //         return;
+    //     }
 
-        playerMovement.JumpToPosition(grapplePoint, highestPointOnArc);
+    //     playerMovement.JumpToPosition(grapplePoint, highestPointOnArc);
 
-        Invoke(nameof(StopGrapple), 1f);
-    }
-    public void StopGrapple()
-    {
-        playerMovement.freeze = false;
+    //     Invoke(nameof(StopGrapple), 1f);
+    // }
+    // public void StopGrapple()
+    // {
+    //     playerMovement.freeze = false;
 
-        grappling = false;
-        playerMovement.fallMultiplier = 2.5f;
+    //     grappling = false;
+    //     playerMovement.fallMultiplier = 2.5f;
 
-        grapplingCdTimer = grapplingCd;
+    //     grapplingCdTimer = grapplingCd;
 
-        //lr.enabled = false;
-    }
-    public bool IsGrappling()
-    {
-        return grappling;
-    }
+    //     //lr.enabled = false;
+    // }
+    // public bool IsGrappling()
+    // {
+    //     return grappling;
+    // }
 
 }

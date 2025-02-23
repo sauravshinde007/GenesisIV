@@ -6,27 +6,34 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour, IDamageable
 {
     public NavMeshAgent agent;
-
     public Transform player;
-
     public LayerMask whatIsGround, whatIsPlayer;
 
     [Header("Status")]
     private int currenthealth;
     public int maxHealth = 10;
     public HealthBar healthBar;
+    public Animator animator;
 
-    //Patroling
+    // Patroling
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
 
-    //Attacking
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
-    public GameObject projectile;
+    // Attacking
+    [Header("Attacking")]
 
-    //States
+    public float timeBetweenAttacks;
+    public float spread=20f;
+    bool alreadyAttacked;
+    public TrailRenderer bulletTrail;
+    public Transform gunTip;
+    
+    public int attackDamage;
+    public GameObject breakEnemy;
+    public GameObject CompleteEnemy;
+
+    // States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
@@ -34,17 +41,19 @@ public class EnemyAI : MonoBehaviour, IDamageable
     {
         currenthealth = maxHealth;
         healthBar.SetMaxHealth(currenthealth);
+        agent.updateRotation = false; // Prevent NavMeshAgent from auto-rotating
     }
 
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        breakEnemy.SetActive(false);
+        CompleteEnemy.SetActive(true);
     }
 
     private void Update()
     {
-        //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
@@ -58,17 +67,23 @@ public class EnemyAI : MonoBehaviour, IDamageable
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
+        {
+            animator.SetTrigger("isWalking");
             agent.SetDestination(walkPoint);
+            Vector3 direction = (walkPoint - transform.position).normalized;
+            if (direction.magnitude > 0.1f)
+            {
+                transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            }
+        }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
     }
+
     private void SearchWalkPoint()
     {
-        //Calculate random point in range
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
@@ -81,44 +96,69 @@ public class EnemyAI : MonoBehaviour, IDamageable
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
+        animator.SetTrigger("isWalking");
+        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
     }
 
     private void AttackPlayer()
     {
-        //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
-
-        // Aim at the player
-        Vector3 direction = (player.position - transform.position).normalized;
+        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        animator.SetTrigger("isShooting");
 
         if (!alreadyAttacked)
         {
-            /// Attack code
-            GameObject spawnedProjectile = Instantiate(projectile, transform.position + direction * 1.5f, Quaternion.identity);
-            Rigidbody rb = spawnedProjectile.GetComponent<Rigidbody>();
+            Vector3 direction = (player.position - gunTip.position).normalized;
+            direction +=new Vector3(
+           Random.Range(-spread, spread) * 0.01f,
+           Random.Range(-spread, spread) * 0.01f,
+           Random.Range(-spread, spread) * 0.01f
+       );
+            direction.Normalize();
+            RaycastHit hit;
+            TrailRenderer trail = Instantiate(bulletTrail, gunTip.position, Quaternion.identity);
 
-            // Ensure projectile has a Rigidbody
-            if (rb != null)
+            if (Physics.Raycast(gunTip.position, direction, out hit, attackRange, whatIsPlayer))
             {
-                rb.velocity = direction * 20f; // Adjust speed as needed
+                
+                player.GetComponent<PlayerMovement>().TakeDamage(attackDamage);
+                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal));
             }
-
-            // Destroy projectile after 2 seconds
-            Destroy(spawnedProjectile, 2f);
+            else
+            {
+                StartCoroutine(SpawnTrail(trail, gunTip.position + direction * attackRange, Vector3.zero));
+            }
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
 
+    private IEnumerator SpawnTrail(TrailRenderer trail, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        Vector3 startPosition = trail.transform.position;
+        float distance = Vector3.Distance(startPosition, hitPoint);
+        float remainingDistance = distance;
+
+        while (remainingDistance > 0)
+        {
+            trail.transform.position = Vector3.Lerp(startPosition, hitPoint, 1 - (remainingDistance / distance));
+            remainingDistance -= 50f * Time.deltaTime;
+            yield return null;
+        }
+        trail.transform.position = hitPoint;
+        Destroy(trail.gameObject, trail.time);
+    }
+
     public void TakeDamage(int damage)
     {
         currenthealth -= damage;
         healthBar.SetHealth(currenthealth);
+        Debug.Log("Enemy took damage: " + damage);
 
         if (currenthealth <= 0)
         {
-            DestroyEnemy();
+            breakEnemyActive();
         }
     }
 
@@ -126,9 +166,18 @@ public class EnemyAI : MonoBehaviour, IDamageable
     {
         alreadyAttacked = false;
     }
+    private void breakEnemyActive()
+    {
+        alreadyAttacked = true;
+        CompleteEnemy.SetActive(false);
+        breakEnemy.SetActive(true);
+        Invoke("DestroyEnemy", 2f);
+    }
 
     private void DestroyEnemy()
     {
+        
+
         Destroy(gameObject);
     }
 

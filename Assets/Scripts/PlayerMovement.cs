@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
-    Vector3 moveDirection;
+    
 
     Rigidbody rb;
     private Vector3 gravity = Physics.gravity;
@@ -81,6 +81,8 @@ public class PlayerMovement : MonoBehaviour
     public bool freeze;
     public bool walking;
     public bool isWalking;
+    public Vector3 moveDirection;
+
 
     private void Start()
     {
@@ -337,7 +339,7 @@ public class PlayerMovement : MonoBehaviour
             enableMovementOnNextTouch = false;
             ResetRestrictions();
 
-            gun.StopGrapple();
+            //gun.StopGrapple();
         }
 
         // Check if the player is hit by a bullet
