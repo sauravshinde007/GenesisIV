@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed;
     public float crouchYScale;
     private float startYScale;
+
+    [Header("Health")]
+    public int maxHealth = 50;
+    public int currentHealth;
+    public HealthBar healthBar;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -51,9 +57,10 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
-    Vector3 moveDirection;
+    
 
     Rigidbody rb;
+    private Vector3 gravity = Physics.gravity;
 
     public enum MovementState
     {
@@ -72,6 +79,10 @@ public class PlayerMovement : MonoBehaviour
     public bool activeGrapple;
     public bool swinging;
     public bool freeze;
+    public bool walking;
+    public bool isWalking;
+    public Vector3 moveDirection;
+
 
     private void Start()
     {
@@ -81,6 +92,10 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         startYScale = transform.localScale.y;
+
+        //Health settings
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     private void Update()
@@ -140,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
     private void StateHandler()
     {
         //Mode- Wall Running
+        isWalking = false;
         if (wallrunning)
         {
             state = MovementState.WallRunning;
@@ -174,12 +190,15 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.Sprinting;
             moveSpeed = sprintSpeed;
+            isWalking = true;
+            
         }
         //Mode - Walking
-        else if (grounded)
+        else if (grounded &&(horizontalInput != 0 || verticalInput != 0))
         {
             state = MovementState.Walking;
             moveSpeed = walkSpeed;
+            isWalking = true;
         }
         //Mode - Air
         else
@@ -286,14 +305,32 @@ public class PlayerMovement : MonoBehaviour
     {
         enableMovementOnNextTouch = true;
         rb.velocity = velocityToSet;
-
         cam.DoFov(grappleFov);
     }
     public void ResetRestrictions()
     {
         activeGrapple = false;
         swinging = false;
+        Physics.gravity = gravity;
+    
         cam.DoFov(85f);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player Died!");
+        RestartScene();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -303,19 +340,59 @@ public class PlayerMovement : MonoBehaviour
             enableMovementOnNextTouch = false;
             ResetRestrictions();
 
-            gun.StopGrapple();
+            //gun.StopGrapple();
+        }
+
+        // Check if the player is hit by a bullet
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+
+            TakeDamage(10);
+            Destroy(collision.gameObject); // Destroy bullet on impact
+        }
+
+        // Check if the player collides with a death object
+        if (collision.gameObject.CompareTag("Death"))
+        {
+            RestartScene();
         }
     }
     public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
     {
-        float gravity = Physics.gravity.y;
+        float gravity = Mathf.Abs(Physics.gravity.y); // Ensure positive gravity
         float displacementY = endPoint.y - startPoint.y;
         Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
 
-        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
-        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
-            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+        float timeToReach;
+        float velocityY;
+        Vector3 velocityXZ;
 
-        return velocityXZ + velocityY;
+        if (displacementY > 0) // Grappling upwards
+        {
+            velocityY = Mathf.Sqrt(2 * gravity * trajectoryHeight); // Needed to reach peak height
+            timeToReach = (velocityY + Mathf.Sqrt(velocityY * velocityY + 2 * gravity * displacementY)) / gravity;
+        }
+        else // Grappling downward
+        {
+            velocityY = Mathf.Sqrt(2*gravity * (trajectoryHeight - transform.position.y));
+            Debug.Log("h:"+transform.position.y);
+            Debug.Log("TrajectoryHeight:" + trajectoryHeight);
+            Debug.Log("Hmax:"+(trajectoryHeight-transform.position.y));
+            timeToReach = (velocityY +Mathf.Sqrt(2*trajectoryHeight*gravity))/gravity; // Free-fall time
+
+        }
+
+        velocityXZ = displacementXZ / timeToReach; // Compute horizontal velocity
+
+        Debug.Log("Gravity: " + gravity);
+        Debug.Log("Velocity XZ: " + velocityXZ + " Velocity Y: " + velocityY);
+
+        return new Vector3(velocityXZ.x, velocityY, velocityXZ.z);
     }
+
+    private void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 }

@@ -4,22 +4,24 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
+  - Bullet
+  - Death
+  - Audio
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - Ground
-  - Trampoline
+  - Player
   - Grapple
   - Swing
-  - 
-  - 
-  - 
-  - 
+  - Trampoline
+  - Enemy
+  - Wall
+  - Post Processing
+  - EnemyWalk
   - 
   - 
   - 

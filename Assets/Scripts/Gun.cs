@@ -1,17 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using System.Text;
-using Unity.VisualScripting;
 
 public class Gun : MonoBehaviour
 {
     [Header("References")]
     public Camera fpsCamera;
     public Transform gunTip, player;
-
-    public GameObject bulletPrefab, muzzleFlash;
     public GameObject crosshair;
     public PlayerMovement playerMovement;
     public Rigidbody playerRb;
@@ -38,45 +31,23 @@ public class Gun : MonoBehaviour
     public float forwardThrustForce;
     public float extendCableSpeed;
 
-
-    [Header("Shooting")]
-    public float bulletForce = 50f;
-    public float upwardForce;
-
-    public float timeBetweenShooting, spread, timeBetweenShots;
-    public int bulletsPerTap;
-    public bool allowButtonHold;
-    [Header("Reloading")]
-    public int magazineSize;
-    public float reloadTime;
-    public TextMeshProUGUI ammunitionDisplay;
     [Header("Trampoline")]
     public LayerMask trampoline;
     public float maxCheckDistance;
     public float trampolineForce;
     private Vector3 trampolinePosition;
 
-
-
-    //Private Bullet Variables
-
-    private bool allowInvoke = true;
-    private int bulletsShot;
-    private bool readyToShoot;
-    private bool reloading;
-    private int bulletsLeft;
-
+    AudioManager audioManager;
 
     private void Awake()
     {
-        readyToShoot = true;
-        bulletsLeft = magazineSize;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     void Update()
     {
         HandleInput();
-        UpdateUI();
+        
         if (grapplingCdTimer > 0)
             grapplingCdTimer -= Time.deltaTime;
     }
@@ -88,27 +59,12 @@ public class Gun : MonoBehaviour
         if (joint != null) OdmGearMovement();
         if (Input.GetMouseButtonDown(0))
         {
-            if (CheckForTrampoline())
-            {
-                Debug.Log("Trampoline Hit");
-            }
-            else if (readyToShoot && !reloading && bulletsLeft > 0)
-            {
-                bulletsShot = 0;
-                Shoot();
-            }
+            CheckForTrampoline();
+            
         }
-
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
-        if (readyToShoot && Input.GetMouseButton(0) && !reloading && bulletsLeft <= 0) Reload();
     }
 
-    private void UpdateUI()
-    {
-        if (ammunitionDisplay != null)
-            ammunitionDisplay.SetText(bulletsLeft.ToString());
-
-    }
+    
     bool isLookingDown(){
         float currentAngle = fpsCamera.transform.eulerAngles.x;
         if(currentAngle>180) currentAngle -= 360;
@@ -143,9 +99,9 @@ public class Gun : MonoBehaviour
         {
             StartSwing(hit);
         }
-        else if(!isLookingDown())
+        else
         {
-            StartGrapple();
+           // StartGrapple();
 
         }
     }
@@ -153,7 +109,9 @@ public class Gun : MonoBehaviour
     // Swinging SYSTEM
     void StartSwing(RaycastHit hit)
     {
-        
+
+        audioManager.PlaySFX(audioManager.grapple);
+
         playerMovement.swinging = true;
         grapplePoint = hit.point;
 
@@ -229,141 +187,69 @@ public class Gun : MonoBehaviour
         return grapplePoint;
     }
 
-    // Grapple SYSTEM
-    private void StartGrapple()
-    {
-        if (grapplingCdTimer > 0) return;
+    // // Grapple SYSTEM
+    // private void StartGrapple()
+    // {
+    //     if (grapplingCdTimer > 0) return;
 
-        grappling = true;
+    //     grappling = true;
+    //     playerMovement.freeze = true;
+    //     RaycastHit hit;
+    //     if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, maxGrappleDistance, whatIsGrappleable))
+    //     {
+    //         grapplePoint = hit.point;
+            
+    //         Invoke(nameof(ExecuteGrapple), grappleDelayTime);
+    //     }
+    //     else
+    //     {
+    //         grapplePoint = fpsCamera.transform.position + fpsCamera.transform.forward * maxGrappleDistance;
 
-        playerMovement.freeze = true;
-
-        RaycastHit hit;
-        if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, maxGrappleDistance, whatIsGrappleable))
-        {
-            grapplePoint = hit.point;
-
-            Invoke(nameof(ExecuteGrapple), grappleDelayTime);
-        }
-        else
-        {
-            grapplePoint = fpsCamera.transform.position + fpsCamera.transform.forward * maxGrappleDistance;
-
-            Invoke(nameof(StopGrapple), grappleDelayTime);
-        }
+    //         Invoke(nameof(StopGrapple), grappleDelayTime);
+    //     }
 
 
-    }
-    private void ExecuteGrapple()
-    {
-        playerMovement.freeze = false;
+    // }
+    // private void ExecuteGrapple()
+    // {
+    //     playerMovement.freeze = false;
 
-        Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+    //     Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+    //     float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y;
+    //     float highestPointOnArc;
 
-        float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y;
-        float highestPointOnArc = grapplePointRelativeYPos + overshootYAxis;
+    //     if (grapplePoint.y >= transform.position.y)
+    //     {
+    //         // Normal arc when grappling upwards
+    //         highestPointOnArc = grapplePoint.y + overshootYAxis;
+    //     }
+    //     else if(!isLookingDown())
+    //     {
+            
+    //         highestPointOnArc = transform.position.y+overshootYAxis;
+    //     }else{
+    //         StopGrapple();
+    //         return;
+    //     }
 
-        if (grapplePointRelativeYPos < 0) highestPointOnArc = overshootYAxis;
-        playerMovement.fallMultiplier =0;
+    //     playerMovement.JumpToPosition(grapplePoint, highestPointOnArc);
 
-        playerMovement.JumpToPosition(grapplePoint, highestPointOnArc);
+    //     Invoke(nameof(StopGrapple), 1f);
+    // }
+    // public void StopGrapple()
+    // {
+    //     playerMovement.freeze = false;
 
-        Invoke(nameof(StopGrapple), 1f);
-    }
+    //     grappling = false;
+    //     playerMovement.fallMultiplier = 2.5f;
 
-    public void StopGrapple()
-    {
-        playerMovement.freeze = false;
+    //     grapplingCdTimer = grapplingCd;
 
-        grappling = false;
-        playerMovement.fallMultiplier = 2.5f;
+    //     //lr.enabled = false;
+    // }
+    // public bool IsGrappling()
+    // {
+    //     return grappling;
+    // }
 
-        grapplingCdTimer = grapplingCd;
-
-        //lr.enabled = false;
-    }
-    public bool IsGrappling()
-    {
-        return grappling;
-    }
-
-   
-
-    // Shooting SYSTEM
-    private void Shoot()
-    {
-        if (bulletsLeft <= 0 || reloading) return;
-        readyToShoot = false;
-
-        //Find the exact hit position using a raycast
-        Ray ray = fpsCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
-        RaycastHit hit;
-
-        //check if ray hits something
-        Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
-            targetPoint = hit.point;
-        else
-            targetPoint = ray.GetPoint(75); //Just a point far away from the player
-
-        //Calculate direction from gunTip to targetPoint
-        Vector3 directionWithoutSpread = targetPoint - gunTip.position;
-
-        //Calculate spread
-        float x = Random.Range(-spread, spread);
-        float y = Random.Range(-spread, spread);
-
-        //Calculate new direction with spread
-        Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0); //Just add spread to last direction
-
-        //Instantiate bulletPrefab/projectile
-        GameObject currentBullet = Instantiate(bulletPrefab, gunTip.position, Quaternion.identity); //store instantiated bulletPrefab in currentBullet
-        //Rotate bulletPrefab to shoot direction
-        currentBullet.transform.forward = directionWithSpread.normalized;
-
-        //Add forces to bulletPrefab
-        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * bulletForce, ForceMode.Impulse);
-        currentBullet.GetComponent<Rigidbody>().AddForce(fpsCamera.transform.up * upwardForce, ForceMode.Impulse);
-
-        //Instantiate muzzle flash, if you have one
-        if (muzzleFlash != null)
-            Instantiate(muzzleFlash, gunTip.position, Quaternion.identity);
-
-        bulletsLeft--;
-        bulletsShot++;
-
-        //Invoke resetShot function (if not already invoked), with your timeBetweenShooting
-        if (allowInvoke)
-        {
-            Invoke("ResetShot", timeBetweenShooting);
-            allowInvoke = false;
-
-
-        }
-
-        //if more than one bulletsPerTap make sure to repeat shoot function
-        if (bulletsShot < bulletsPerTap && bulletsLeft > 0)
-            Invoke("Shoot", timeBetweenShots);
-    }
-
-    private void ResetShot()
-    {
-        readyToShoot = true;
-        allowInvoke = true;
-    }
-
-    private void Reload()
-    {
-        if (reloading) return;
-        reloading = true;
-        readyToShoot = false;
-        Invoke("ReloadFinished", reloadTime);
-    }
-
-    private void ReloadFinished()
-    {
-        bulletsLeft = magazineSize;
-        reloading = false;
-        readyToShoot = true;
-    }
 }
