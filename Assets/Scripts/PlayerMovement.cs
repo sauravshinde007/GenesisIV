@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
         grappling,
         swinging,
         Sprinting,
-        Crouching,
+        //Crouching,
         WallRunning,
         Air,
     }
@@ -139,17 +139,17 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        // start crouch
-        if (Input.GetKeyDown(crouchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            rb.AddForce(Vector3.down*5f, ForceMode.Impulse);
-        }
-        // stop crouch
-        if (Input.GetKeyUp(crouchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-        }
+        //// start crouch
+        //if (Input.GetKeyDown(crouchKey))
+        //{
+        //    transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+        //    rb.AddForce(Vector3.down*5f, ForceMode.Impulse);
+        //}
+        //// stop crouch
+        //if (Input.GetKeyUp(crouchKey))
+        //{
+        //    transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        //}
     }
 
     private void StateHandler()
@@ -180,11 +180,11 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = swingSpeed;
         }
         //Mode - Crouching
-        if (Input.GetKey(crouchKey))
-        {
-            state = MovementState.Crouching;
-            moveSpeed = crouchSpeed;
-        }
+        //if (Input.GetKey(crouchKey))
+        //{
+        //    state = MovementState.Crouching;
+        //    moveSpeed = crouchSpeed;
+        //}
         //Mode - Sprinting
         if (grounded && Input.GetKey(sprintKey))
         {

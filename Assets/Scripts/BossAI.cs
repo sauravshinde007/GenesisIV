@@ -328,6 +328,12 @@ public class BossAI : MonoBehaviour, IDamageable
     void Die()
     {
         Debug.Log("Boss Defeated!");
+
+        if (GameObject.FindObjectOfType<BossArena>() != null)
+        {
+            GameObject.FindObjectOfType<BossArena>().BossDefeated();
+        }
+
         Destroy(gameObject);
     }
 }

@@ -38,6 +38,10 @@ public class Gun : MonoBehaviour
     private Vector3 trampolinePosition;
 
     AudioManager audioManager;
+    [Header("Prediction")]
+    public RaycastHit predictionHit;
+    public float predictionSphereCastRadius;
+    public Transform predictionPoint;
 
     private void Awake()
     {
@@ -47,29 +51,31 @@ public class Gun : MonoBehaviour
     void Update()
     {
         HandleInput();
-        
+        CheckForSwingPoints();
+
         if (grapplingCdTimer > 0)
             grapplingCdTimer -= Time.deltaTime;
     }
 
     private void HandleInput()
     {
-        if (Input.GetMouseButtonDown(1)) StartSwingorGrapple();
+        if (Input.GetMouseButtonDown(1)) StartSwing(); ;
         if (Input.GetMouseButtonUp(1) && isSwinging()) StopSwing();
         if (joint != null) OdmGearMovement();
         if (Input.GetMouseButtonDown(0))
         {
             CheckForTrampoline();
-            
+
         }
     }
 
-    
-    bool isLookingDown(){
+
+    bool isLookingDown()
+    {
         float currentAngle = fpsCamera.transform.eulerAngles.x;
-        if(currentAngle>180) currentAngle -= 360;
+        if (currentAngle > 180) currentAngle -= 360;
         Debug.Log(currentAngle);
-        return currentAngle>=60;
+        return currentAngle >= 60;
     }
 
 
@@ -92,28 +98,70 @@ public class Gun : MonoBehaviour
 
     }
     //Swing and Grapple SYSTEM
-    void StartSwingorGrapple()
+    // void StartSwingorGrapple()
+    // {
+    //     RaycastHit hit;
+    //     if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, maxSwingDistance, swingable))
+    //     {
+    //         StartSwing(hit);
+    //     }
+    //     else
+    //     {
+    //        // StartGrapple();
+
+    //     }
+    // }
+
+    // Swinging SYSTEM'
+    private void CheckForSwingPoints()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, maxSwingDistance, swingable))
+        if (joint != null) return;
+
+        RaycastHit sphereCastHit;
+        Physics.SphereCast(fpsCamera.transform.position, predictionSphereCastRadius, fpsCamera.transform.forward,
+                            out sphereCastHit, maxSwingDistance, swingable);
+
+        RaycastHit raycastHit;
+        Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward,
+                            out raycastHit, maxSwingDistance, swingable);
+
+        Vector3 realHitPoint;
+
+        // Option 1 - Direct Hit
+        if (raycastHit.point != Vector3.zero)
+            realHitPoint = raycastHit.point;
+
+        // Option 2 - Indirect (predicted) Hit
+        else if (sphereCastHit.point != Vector3.zero)
+            realHitPoint = sphereCastHit.point;
+
+        // Option 3 - Miss
+        else
+            realHitPoint = Vector3.zero;
+
+        // realHitPoint found
+        if (realHitPoint != Vector3.zero)
         {
-            StartSwing(hit);
+            predictionPoint.gameObject.SetActive(true);
+            predictionPoint.position = realHitPoint;
         }
+        // realHitPoint not found
         else
         {
-           // StartGrapple();
-
+            predictionPoint.gameObject.SetActive(false);
         }
+
+        predictionHit = raycastHit.point == Vector3.zero ? sphereCastHit : raycastHit;
     }
 
-    // Swinging SYSTEM
-    void StartSwing(RaycastHit hit)
+    void StartSwing()
     {
 
+        if (predictionHit.point == Vector3.zero) return;
         audioManager.PlaySFX(audioManager.grapple);
 
         playerMovement.swinging = true;
-        grapplePoint = hit.point;
+        grapplePoint = predictionHit.point;
 
         if (joint == null)
         {
@@ -198,7 +246,7 @@ public class Gun : MonoBehaviour
     //     if (Physics.Raycast(fpsCamera.transform.position, fpsCamera.transform.forward, out hit, maxGrappleDistance, whatIsGrappleable))
     //     {
     //         grapplePoint = hit.point;
-            
+
     //         Invoke(nameof(ExecuteGrapple), grappleDelayTime);
     //     }
     //     else
@@ -225,7 +273,7 @@ public class Gun : MonoBehaviour
     //     }
     //     else if(!isLookingDown())
     //     {
-            
+
     //         highestPointOnArc = transform.position.y+overshootYAxis;
     //     }else{
     //         StopGrapple();

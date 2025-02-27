@@ -181,7 +181,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         CompleteEnemy.SetActive(false);
         breakEnemy.SetActive(true);
         audioManager.PlaySFX(audioManager.enemyDeath);
-        Invoke("DestroyEnemy", 2f);
+        Invoke("DestroyEnemy", 0.5f);
     }
 
     private void DestroyEnemy()

@@ -12,7 +12,7 @@ public class GunShoot : MonoBehaviour
     public int magazineSize;
     public float reloadTime;
     public TrailRenderer BulletTrail;
-    public ParticleSystem ShootingSystem, ImpactParticleSystem;
+    public ParticleSystem ShootingSystem;
     public LayerMask Mask;
     public Animator gunAnimator;
     public TextMeshProUGUI ammunitionDisplay;
@@ -99,7 +99,9 @@ public class GunShoot : MonoBehaviour
 
             gunAnimator.ResetTrigger("isShooting");
             gunAnimator.SetTrigger("isShooting");
+
             ShootingSystem.Play();
+
             Vector3 direction = GetDirection();
             RaycastHit hit;
             TrailRenderer trail = GetTrail();
@@ -150,11 +152,6 @@ public class GunShoot : MonoBehaviour
         }
         Trail.transform.position = HitPoint;
 
-        if (MadeImpact)
-        {
-            //Instantiate(ImpactParticleSystem, HitPoint, Quaternion.LookRotation(HitNormal));
-        }
-        
         ReturnTrail(Trail);
     }
 
