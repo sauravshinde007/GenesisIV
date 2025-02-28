@@ -1120,14 +1120,14 @@ MonoBehaviour:
     m_Bits: 8
   wallRunForce: 200
   wallJumpUpForce: 7
-  wallJumpSideForce: 7
+  wallJumpSideForce: 10
   wallClimbSpeed: 3
   maxWallRunTime: 0.7
   jumpKey: 32
   upwardsRunKey: 304
   downwardsRunKey: 306
   wallCheckDistance: 1
-  minJumpHeight: 2
+  minJumpHeight: 3
   exitWallTime: 0.1
   useGravity: 1
   gravityCounterForce: 20
@@ -1309,7 +1309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 536032582122790681}
-  mouseSensitivity: 2
+  mouseSensitivity: 5
 --- !u!114 &1118897923374836768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1622,8 +1622,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1280
   maxSwingDistance: 30
-  horizontalThrustForce: 2000
-  forwardThrustForce: 2000
+  horizontalThrustForce: 4000
+  forwardThrustForce: 3000
   extendCableSpeed: 20
   trampoline:
     serializedVersion: 2

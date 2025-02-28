@@ -11879,22 +11879,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2761104931200960435, guid: 25a538ce96fbc7c4aa3e877dc8e72fe9, type: 3}
-      propertyPath: wallJumpSideForce
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2962277364025955449, guid: 25a538ce96fbc7c4aa3e877dc8e72fe9, type: 3}
-      propertyPath: forwardThrustForce
-      value: 3000
-      objectReference: {fileID: 0}
-    - target: {fileID: 2962277364025955449, guid: 25a538ce96fbc7c4aa3e877dc8e72fe9, type: 3}
-      propertyPath: horizontalThrustForce
-      value: 4000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4218599723798938076, guid: 25a538ce96fbc7c4aa3e877dc8e72fe9, type: 3}
-      propertyPath: m_Value
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 4813930936679769910, guid: 25a538ce96fbc7c4aa3e877dc8e72fe9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

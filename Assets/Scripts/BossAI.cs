@@ -64,6 +64,7 @@ public class BossAI : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        if(currentHealth<=0) TakeDamage(0);
         if(!isPlayerInBossArea) return;
 
         RotateTowardsPlayer();
@@ -321,15 +322,17 @@ public class BossAI : MonoBehaviour, IDamageable
         healthBar.SetHealth(currentHealth);
         if (currentHealth <= 0)
         {
-            Explosion.Play();
+            Instantiate(Explosion, transform.position, Quaternion.identity);
+
             Invoke("Die", 0.5f);
+
         }
     }
+
 
     void Die()
     {
         Debug.Log("Boss Defeated!");
-
 
         if (GameObject.FindObjectOfType<BossArena>() != null)
         {

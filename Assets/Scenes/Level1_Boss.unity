@@ -14540,11 +14540,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1241592337077013812, guid: 6e6fe701d58d54f4fa608bb02b337898, type: 3}
       propertyPath: hitMask.m_Bits
-      value: 2121
+      value: 31743
       objectReference: {fileID: 0}
     - target: {fileID: 1241592337077013812, guid: 6e6fe701d58d54f4fa608bb02b337898, type: 3}
       propertyPath: playerLayer.m_Bits
-      value: 2121
+      value: 31743
       objectReference: {fileID: 0}
     - target: {fileID: 1602848149070345567, guid: 6e6fe701d58d54f4fa608bb02b337898, type: 3}
       propertyPath: m_BaseOffset
