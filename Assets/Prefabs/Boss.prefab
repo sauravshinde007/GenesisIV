@@ -820,6 +820,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   muzzleFlash: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
+  Explosion: {fileID: 1420197002406606821, guid: f4421a3841d920d4ab0e40a4c50ab55e, type: 3}
   BulletTrail: {fileID: 328621789431213768, guid: 0577f305246087641a7a3ec09465a341, type: 3}
   missilePrefab: {fileID: 5468461462371259145, guid: bd30779ab0dbb39498e24d54a4783ba4, type: 3}
   missileLaunchPoint: {fileID: 7846639028045060959}

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class BossArena : MonoBehaviour
 {
@@ -8,9 +9,11 @@ public class BossArena : MonoBehaviour
     public float doorCloseHeight = -3f; // How much to lower the door when closing
     public float doorSpeed = 2f; // Speed of door closing
     public GameObject levelChanger; // Assign the LevelChanger object in Inspector
+    public PlayableDirector cutscene; // Assign the cutscene PlayableDirector in Inspector
 
     private Vector3 doorInitialPosition;
     private bool doorClosed = false;
+    private bool cutscenePlayed = false;
 
     private void Start()
     {
@@ -34,11 +37,34 @@ public class BossArena : MonoBehaviour
             boss.isPlayerInBossArea = true;
             boss.healthBar.gameObject.SetActive(true);
 
+            if (!cutscenePlayed && cutscene != null)
+            {
+                PlayCutscene();
+            }
+
             if (!doorClosed && door != null)
             {
                 StartCoroutine(CloseDoor());
             }
         }
+    }
+
+    private void PlayCutscene()
+    {
+        cutscenePlayed = true;
+        cutscene.Play();
+        StartCoroutine(WaitForCutsceneToEnd());
+    }
+
+    IEnumerator WaitForCutsceneToEnd()
+    {
+        while (cutscene.state == PlayState.Playing)
+        {
+            yield return null;
+        }
+
+        // Enable boss behavior after cutscene ends
+        boss.enabled = true;
     }
 
     IEnumerator CloseDoor()

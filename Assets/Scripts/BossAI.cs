@@ -31,7 +31,7 @@ public class BossAI : MonoBehaviour, IDamageable
     public int bulletDamage = 10; // Damage per bullet
     public LayerMask hitMask;
 
-    public ParticleSystem muzzleFlash;
+    public ParticleSystem muzzleFlash,Explosion;
     public TrailRenderer BulletTrail;
     [Header("Missile Attack")]
     public GameObject missilePrefab;
@@ -321,13 +321,15 @@ public class BossAI : MonoBehaviour, IDamageable
         healthBar.SetHealth(currentHealth);
         if (currentHealth <= 0)
         {
-            Die();
+            Explosion.Play();
+            Invoke("Die", 0.5f);
         }
     }
 
     void Die()
     {
         Debug.Log("Boss Defeated!");
+
 
         if (GameObject.FindObjectOfType<BossArena>() != null)
         {
