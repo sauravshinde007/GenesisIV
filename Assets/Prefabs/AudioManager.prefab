@@ -181,12 +181,13 @@ MonoBehaviour:
   reload: {fileID: 8300000, guid: d18cfede613fd454bbac6fd87b588505, type: 3}
   grapple: {fileID: 8300000, guid: af6775378fb84864ca1e8b8056565293, type: 3}
   button: {fileID: 8300000, guid: b3146f849bb519b4a9b34b770bec2e3a, type: 3}
-  door: {fileID: 8300000, guid: 0d93b2e7068317445a6871dd1c2cb64b, type: 3}
   machineGun: {fileID: 8300000, guid: 2cdf8c55a58adeb47acefc10de26c07e, type: 3}
   explosion: {fileID: 8300000, guid: 20009a0d5edc7e343a81360d8359f4e5, type: 3}
   laserBeam: {fileID: 8300000, guid: 4c1ac480dae9e104dbe21d2f77ae53be, type: 3}
   enemyFire: {fileID: 8300000, guid: 8606e0ab67697b54596077ffe4960d9c, type: 3}
   enemyDeath: {fileID: 8300000, guid: 7140fab31b5fff84596a1c2fcc7d1fe5, type: 3}
+  levelChanger: {fileID: 8300000, guid: 384b54fdda6d4234facee3c217373980, type: 3}
+  doorClose: {fileID: 8300000, guid: 611b0369d06e0984a81a9d48bfe3c0d1, type: 3}
   scenesWithoutMusic:
   - Level1_Boss
   - MainMenu

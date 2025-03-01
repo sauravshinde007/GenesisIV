@@ -15,7 +15,7 @@ public class PlayerCam : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Collect Mouse Input
         float inputX = Input.GetAxis("Mouse X") * mouseSensitivity;

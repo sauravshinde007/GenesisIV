@@ -18,6 +18,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip laserBeam;
     public AudioClip enemyFire;
     public AudioClip enemyDeath;
+    public AudioClip levelChanger;
+    public AudioClip doorClose;
 
     [Header("Scenes Without Music")]
     [SerializeField] private string[] scenesWithoutMusic; // Add scene names in Inspector
@@ -66,6 +68,9 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
+            // Reset volume to 1 when entering a scene that should have music
+            musicSource.volume = 1f;
+
             if (!musicSource.isPlaying)
             {
                 musicSource.Play();
