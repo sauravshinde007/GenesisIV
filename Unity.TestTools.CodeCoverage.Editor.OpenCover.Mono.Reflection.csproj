@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{9F68B7F2-46C1-9F77-31F2-3687ADE6550F}</ProjectGuid>
+    <ProjectGuid>{33A0DE09-BB24-209C-242A-D04639BB678C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection</AssemblyName>
@@ -992,11 +992,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{896CC41D-82AF-0D31-02AE-BFB14EF9FA38}</Project>
+      <Project>{C4AF1CEE-737B-A038-EEE3-D1096D551E0F}</Project>
       <Name>UnityEditor.TestRunner</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
-      <Project>{D6B1F44D-3F16-FBD2-1D6A-759309C04B07}</Project>
+      <Project>{6C74C226-B48A-217B-2B7D-8FB3110DA9F6}</Project>
       <Name>UnityEngine.TestRunner</Name>
     </ProjectReference>
   </ItemGroup>
